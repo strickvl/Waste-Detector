@@ -34,13 +34,9 @@ def load_models() -> Tuple[torch.nn.Module, torch.nn.Module]:
     """
     detector_ckpt = glob.glob('model_dir/detector_*')[0]
     classifier_ckpt = glob.glob('model_dir/classifier_*')[0]
-    # Detector checkpoints and model config
-    #detector_ckpt = f'model_dir/efficientDet_icevision_v9.ckpt'
-    extra_args = {}
     model_type = models.ross.efficientdet
     backbone = model_type.backbones.d1(pretrained=False)
-    extra_args['img_size'] = 512
-
+    extra_args = {'img_size': 512}
     # Create the detector model
     det_model = model_type.model(backbone=backbone, num_classes=2,
                                 pretrained_backbone=False, **extra_args)

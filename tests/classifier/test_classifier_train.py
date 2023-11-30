@@ -56,7 +56,7 @@ def test_train():
                                                           None, None)
 
     # Check that the model paramters changed
-    new_parameters = [param for param in model.parameters()]
+    new_parameters = list(model.parameters())
     equality = [torch.equal(new_parameters[i], old_parameters[i]) for i in range(len(new_parameters))]
 
     assert False in equality

@@ -60,7 +60,7 @@ def test_train_epoch():
     trainer.fit(lightning_model, train_dl, valid_dl)
 
     # Check that the model paramters changed
-    new_parameters = [param for param in model.parameters()]
+    new_parameters = list(model.parameters())
     equality = [torch.equal(new_parameters[i], old_parameters[i]) for i in range(len(new_parameters))]
 
     assert False in equality

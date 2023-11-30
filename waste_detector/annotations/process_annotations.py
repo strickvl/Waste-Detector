@@ -42,13 +42,7 @@ def process_annotations(parameters: Dict) -> Tuple[pd.DataFrame, pd.DataFrame, D
             ["id", "width", "height", "file_name"]
         ]
 
-        if idx == 0:
-            # If it is the first file, the maximum identifier is from the first file
-            max_id = temp_images_df["id"].max()
-        else:
-            # If it is not the first file, the maximum identifier is from the global file
-            max_id = images_df["id"].max()
-
+        max_id = temp_images_df["id"].max() if idx == 0 else images_df["id"].max()
         if idx != 0:
             # Generate new identifiers
             new_ids = np.arange(max_id + 1, max_id + len(temp_images_df) + 1)
@@ -59,7 +53,7 @@ def process_annotations(parameters: Dict) -> Tuple[pd.DataFrame, pd.DataFrame, D
                 raise ValueError("There are image identifiers duplicated")
 
             # Map the old identifiers to the new ones
-            map_ids = {old_id: new_id for old_id, new_id in zip(old_ids, new_ids)}
+            map_ids = dict(zip(old_ids, new_ids))
 
             # Replace the identifiers
             temp_images_df["id"] = temp_images_df["id"].replace(map_ids)
@@ -99,8 +93,7 @@ def create_new_annotation_file(
         images (pandas.DataFrame): Images dataframe.
         categories (Dict): Categories dictionary.
     """
-    annotations_dict = {}
-    annotations_dict["annotations"] = annotations.to_dict(orient="records")
+    annotations_dict = {"annotations": annotations.to_dict(orient="records")}
     annotations_dict["images"] = images.to_dict(orient="records")
     annotations_dict["categories"] = categories
 

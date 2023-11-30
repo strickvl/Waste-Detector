@@ -51,10 +51,7 @@ def validate_classifier():
         'training': data_location
     }
 
-    train_config = training_config(estimator=model,
-                                   inputs=data_channels)
-
-    return train_config
+    return training_config(estimator=model, inputs=data_channels)
 
 
 def validate_detector():
@@ -83,10 +80,7 @@ def validate_detector():
         'training': data_location
     }
 
-    train_config = training_config(estimator=model,
-                                   inputs=data_channels)
-
-    return train_config
+    return training_config(estimator=model, inputs=data_channels)
 
 args = {"owner": "airflow",  'depends_on_past': False}
 classifier_training = validate_classifier()

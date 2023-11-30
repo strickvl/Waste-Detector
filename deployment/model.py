@@ -36,20 +36,19 @@ def predict_boxes(
                     *tfms.A.resize_and_pad(512),
                     tfms.A.Normalize()
                 ])
-    
-    # Single prediction
-    pred_dict  = MODEL_TYPE.end2end_detect(image,
-                                           transforms, 
-                                           det_model,
-                                           class_map=class_map,
-                                           detection_threshold=detection_threshold,
-                                           return_as_pil_img=False,
-                                           return_img=True,
-                                           display_bbox=False,
-                                           display_score=False,
-                                           display_label=False)
 
-    return pred_dict
+    return MODEL_TYPE.end2end_detect(
+        image,
+        transforms,
+        det_model,
+        class_map=class_map,
+        detection_threshold=detection_threshold,
+        return_as_pil_img=False,
+        return_img=True,
+        display_bbox=False,
+        display_score=False,
+        display_label=False,
+    )
 
 def prepare_prediction(
     pred_dict : Dict,
@@ -120,6 +119,4 @@ def predict_class(
         y_preds = classifier(tran_image)
         preds.append(y_preds.softmax(1).detach().numpy())
 
-    preds = np.concatenate(preds).argmax(1)
-
-    return preds
+    return np.concatenate(preds).argmax(1)
