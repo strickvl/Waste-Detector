@@ -46,9 +46,7 @@ def val_step(
 
     y_test = np.concatenate(y_test)
     preds = np.concatenate(preds).argmax(1)
-    acc = accuracy_score(y_test, preds)
-
-    return acc
+    return accuracy_score(y_test, preds)
 
 def get_loaders(
     df_test : pd.DataFrame,
@@ -57,10 +55,12 @@ def get_loaders(
     ds_test = WasteDatasetClassification(
         df_test, get_transforms(config, augment=False), config
     )
-    dl_test = DataLoader(
-        ds_test, batch_size=int(config['batch_size']), shuffle=True, num_workers=2
+    return DataLoader(
+        ds_test,
+        batch_size=int(config['batch_size']),
+        shuffle=True,
+        num_workers=2,
     )
-    return dl_test
 
 
 def validate(config: Dict):

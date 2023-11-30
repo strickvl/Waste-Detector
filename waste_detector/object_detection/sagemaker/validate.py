@@ -52,12 +52,12 @@ def get_data_loaders(model_type, config) -> Tuple[DataLoader]:
     # Datasets
     test_ds = Dataset(test_records, test_tfms)
 
-    # Data Loaders
-    test_dl = model_type.valid_dl(
-        test_ds, batch_size=int(config['batch_size']), num_workers=4, shuffle=False
+    return model_type.valid_dl(
+        test_ds,
+        batch_size=int(config['batch_size']),
+        num_workers=4,
+        shuffle=False,
     )
-
-    return test_dl
 
 
 def validate(config : Dict) -> None:

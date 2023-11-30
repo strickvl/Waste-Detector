@@ -48,11 +48,7 @@ def aggregate_annotations_files(data):
         temp_annotations_df = pd.DataFrame(annotations["annotations"])
         temp_images_df = pd.DataFrame(annotations["images"])
 
-        if idx == 0:
-            max_id = temp_images_df["id"].max()
-        else:
-            max_id = images_df["id"].max()
-
+        max_id = temp_images_df["id"].max() if idx == 0 else images_df["id"].max()
         if idx != 0:
             new_ids = np.arange(max_id + 1, max_id + len(temp_images_df) + 1)
             old_ids = temp_images_df["id"].sort_values(ascending=True)
@@ -61,7 +57,7 @@ def aggregate_annotations_files(data):
                 raise ValueError("There are image identifiers duplicated")
 
             # Map the old identifiers to the new ones
-            map_ids = {old: new for old, new in zip(old_ids, new_ids)}
+            map_ids = dict(zip(old_ids, new_ids))
 
             # Replace the identifiers
             temp_images_df["id"] = temp_images_df["id"].replace(map_ids)

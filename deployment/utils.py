@@ -18,9 +18,7 @@ def encode(image):
 
 def decode(encoded_image):
     img_bytes = base64.b64decode(encoded_image.encode('utf-8'))
-    image = PIL.Image.open(io.BytesIO(img_bytes))
-
-    return image
+    return PIL.Image.open(io.BytesIO(img_bytes))
 
 def get_data_drift(image : PIL.Image, data_dist : Dict):
     """

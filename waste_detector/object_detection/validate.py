@@ -94,12 +94,9 @@ def get_data_loaders(
     # Datasets
     test_ds = Dataset(test_records, test_tfms)
 
-    # Data Loaders
-    test_dl = config.MODEL_TYPE.valid_dl(
+    return config.MODEL_TYPE.valid_dl(
         test_ds, batch_size=config.BATCH_SIZE, num_workers=4, shuffle=False
     )
-
-    return test_dl
 
 
 def validate(parameters: Dict) -> None:

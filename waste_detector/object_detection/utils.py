@@ -22,7 +22,7 @@ def get_object_from_str(s):
     """
     pm = s.rsplit(".", 1)
     if len(pm) < 2:
-        raise Exception("'%s' does not exist as python class" % s)
+        raise Exception(f"'{s}' does not exist as python class")
     mod = importlib.import_module(pm[0])
     return getattr(mod, pm[1])
 
